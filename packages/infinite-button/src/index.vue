@@ -1,52 +1,13 @@
-<template>
-  <el-button class="infinite-button"
-             :disabled="disabled"
-             @click="handleClick"
-             :plain="plain"
-             :round="round"
-             :circle="circle"
-             :size="size"
-             :type="type">
-    <i :class="icon"
-       v-if="icon">
-    </i>
-    <!-- 如果没有传入插槽的时候才显示 -->
-    <template v-if="$slots.default">
-      <slot></slot>
-    </template>
 
-  </el-button>
-</template>
 <script>
 import ElButton from 'element-ui/lib/button'
 export default {
   name: 'InfiniteButton',
+  inheritAttrs: false,
   components: {
     ElButton
   },
   props: {
-    type: {
-      type: String,
-      default: 'default'
-    },
-    plain: {
-      type: Boolean
-    },
-    round: {
-      type: Boolean,
-      default: false
-    },
-    circle: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean
-    },
-    icon: {
-      type: String,
-      default: ''
-    },
     size: {
       type: String,
       default: 'small'
@@ -65,6 +26,20 @@ export default {
       this.recursionSetBtnRmFocus(e.target)
       this.$emit('click', e)
     }
+  },
+  render (h) {
+    return h('el-button', {
+      class: [
+        'infinite-button'
+      ],
+      props: {
+        ...this.$attrs,
+        size: this.size
+      },
+      nativeOn: {
+        click: this.handleClick
+      }
+    }, [this.$slots.default])
   }
 }
 </script>
