@@ -33,6 +33,7 @@ export default {
   },
   computed: {
     isFixed () {
+      console.log(this.$route.name)
       return this.$route.name.includes('home')
     }
   },
